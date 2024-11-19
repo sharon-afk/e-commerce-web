@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple E-commerce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .product h3 {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        .product p {
+            font-size: 16px;
+            color: #555;
+        }
+        .product button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .product button:hover {
+            background-color: #218838;
+        }
+        .cart {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .cart p {
+            margin: 5px 0;
+        }
+        .cart button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .cart button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Simple E-commerce Store</h1>
+    </header>
+
+    <div class="container">
+        <div class="product" id="product1">
+            <img src="https://via.placeholder.com/300x200?text=Laptop" alt="Laptop">
+            <h3>Laptop</h3>
+            <p>$999.99</p>
+            <button onclick="addToCart('Laptop', 999.99)">Add to Cart</button>
+        </div>
+
+        <div class="product" id="product2">
+            <img src="https://via.placeholder.com/300x200?text=Smartphone" alt="Smartphone">
+            <h3>Smartphone</h3>
+            <p>$499.99</p>
+            <button onclick="addToCart('Smartphone', 499.99)">Add to Cart</button>
+        </div>
+
+        <div class="product" id="product3">
+            <img src="https://via.placeholder.com/300x200?text=Headphones" alt="Headphones">
+            <h3>Headphones</h3>
+            <p>$89.99</p>
+            <button onclick="addToCart('Headphones', 89.99)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="cart" id="cart">
+        <h3>Shopping Cart</h3>
+        <p id="cart-items"></p>
+        <p>Total: $<span id="total-price">0.00</span></p>
+        <button onclick="checkout()">Checkout</button>
+    </div>
+
+    <script>
+        let cartItems = [];
+        let totalPrice = 0;
+
+        function addToCart(productName, productPrice) {
+            cartItems.push({ name: productName, price: productPrice });
+            totalPrice += productPrice;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cart = document.getElementById('cart');
+            const cartItemsText = cartItems.map(item => `${item.name} - $${item.price.toFixed(2)}`).join('<br>');
+            const totalPriceText = totalPrice.toFixed(2);
+
+            document.getElementById('cart-items').innerHTML = cartItemsText;
+            document.getElementById('total-price').innerText = totalPriceText;
+
+            cart.style.display = cartItems.length > 0 ? 'flex' : 'none';
+        }
+
+        function checkout() {
+            if (cartItems.length === 0) {
+                alert("Your cart is empty. Please add items before checking out.");
+            } else {
+                alert(`Checkout successful! Total price: $${totalPrice.toFixed(2)}`);
+                cartItems = [];
+                totalPrice = 0;
+                updateCart();
+            }
+        }
+    </script>
+
+</body>
+</html>
